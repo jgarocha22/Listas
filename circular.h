@@ -53,7 +53,6 @@ void addLast(Node **p, int num){
 
 void deleteElement(Node **p, int num){
     Node *aux = *p;
-    int n = 0;
     if((*p)->value == num){
         *p = (*p)->prx;
         last = *p;
@@ -66,17 +65,16 @@ void deleteElement(Node **p, int num){
             Node *aux2 = aux->prx;
             aux->prx = aux2->prx;
             last = aux;
-            aux2 = NULL;
+            aux2->prx = NULL;
             delete(aux2);
             
         }else{
-            while(aux->prx != last || n != 1){
+            while(aux->prx != last){
                 if(aux->prx->value == num){
                     Node *aux2 = aux->prx;
                     aux->prx = aux2->prx;
                     aux2->prx = NULL;
                     aux = NULL;
-                    n = 1;
                     delete(aux2);
                 }
                 else

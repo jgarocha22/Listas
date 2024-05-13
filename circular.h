@@ -1,5 +1,5 @@
-#ifndef Circle
-#define Circle
+#ifndef Circular
+#define Circular
 
 #include <iostream>
 using namespace std;
@@ -61,24 +61,27 @@ void deleteElement(Node **p, int num){
         delete(aux);
     }
     else{
-        while(aux->prx != last || n != 1){
-            if(aux->prx->value == num){
-                Node *aux2 = aux->prx;
-                aux->prx = aux2->prx;
-                aux2->prx = NULL;
-                aux = NULL;
-                n = 1;
-                delete(aux2);
-            }
-            else
-                aux = aux->prx;
-        }
-        if(aux->prx == last && aux->prx->value == num){
+        if(last->value == num){
+            while(aux->prx != last) aux = aux->prx;
             Node *aux2 = aux->prx;
             aux->prx = aux2->prx;
             last = aux;
             aux2 = NULL;
             delete(aux2);
+            
+        }else{
+            while(aux->prx != last || n != 1){
+                if(aux->prx->value == num){
+                    Node *aux2 = aux->prx;
+                    aux->prx = aux2->prx;
+                    aux2->prx = NULL;
+                    aux = NULL;
+                    n = 1;
+                    delete(aux2);
+                }
+                else
+                    aux = aux->prx;
+            }
         }
     }
 }

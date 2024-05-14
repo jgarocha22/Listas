@@ -4,12 +4,20 @@
 
 using namespace std;
 
-void colocarPrim(Node **p, string nom){
-    push(p,nom);
+void colocarPrim(Node **p, string nom, int prio){
+    if(prio != 0) {
+        string name = pop(p);
+        prio --;
+        colocarPrim(p,nom,prio);
+        push(p,name);
+    }
+    else{
+        push(p,nom);
+    }
 }
 
 void colocarUlt(Node **p, string nom){
-    if((*(p))){
+    if(*(p)){
         string name = pop(p);
         colocarUlt(p,nom);
         push(p,name);
@@ -18,22 +26,22 @@ void colocarUlt(Node **p, string nom){
         push(p,nom);
 }
 
-void imprimir(Node *p){
+void imprimir(Node **p){
     string name;
-    if(!validate(p)){
-        cout << p->nombre << endl;
-        name = pop(&p);
+    if(!validate(*p)){
+        cout << (*p)->nombre << endl;
+        name = pop(p);
         imprimir(p);
-        push(&p,name);
+        push(p,name);
     }
 }
 
 int main(){
-    int op = 0, cont = 0;
-    string nombre;
+    int op = 0, cont = 0, priori = 0;
     Node *p = NULL;
     while (op != 4){
         int num = 0;
+        string nombre;
 		system ("cls");
 		cout<<"\tMENU COLAS \n"<<endl;
 		cout<<"\t1. Agregar documento a imprimir \n";
@@ -58,7 +66,14 @@ int main(){
                         }
                     }
                     if(num == 1){
-                        colocarPrim(&p,nombre);
+                        priori ++;
+                        if(validate(p)){
+                            push(&p,nombre);
+                        }
+                        else{
+                            int ayu = priori;
+                            colocarPrim(&p,nombre,ayu);
+                        }
                         cont ++;
                     }
                     else{
@@ -74,8 +89,9 @@ int main(){
 			case 2:
                 system("cls");
                 if(!validate(p)){
-                    string aux = pop(&p);
+                    pop2(&p);
                     cont --;
+                    priori --;
                 }
                 else{
                     cout<<"La pila esta vacia"<<endl;
@@ -85,7 +101,7 @@ int main(){
 			case 3:
 				system("cls");
                 if(!validate(p)){
-                    imprimir(p);
+                    imprimir(&p);
                 }
                 else{
                     cout<<"LA pila ESTA VACIA"<<endl;

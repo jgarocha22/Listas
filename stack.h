@@ -1,7 +1,9 @@
 #include <iostream>
+#include <string.h>
 
+using namespace std;
 struct Node{
-    int value;
+    string nombre;
     Node *prx;
 };
 
@@ -11,17 +13,23 @@ bool validate(Node *p){
     return true;
 }
 
-int pop(Node **p){
+string pop(Node **p){
     Node *aux = *p;
     *p = (*p) -> prx;
-    int val = aux->value;
+    string nom = aux->nombre;
     delete aux;
-    return val;
+    return nom;
 }
 
-void push(Node **p, int val){
+void pop2(Node **p){
+    Node *aux = *p;
+    *p = (*p) -> prx;
+    delete aux;
+}
+
+void push(Node **p, string val){
     Node *aux = new Node;
-    aux -> value = val;
+    aux -> nombre = val;
     aux -> prx = *p;
     *p = aux;
     aux = NULL;
